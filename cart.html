@@ -50,32 +50,30 @@
                 <td>Subtotal</td>
             </tr>
         </thead>
-        <tbody>
+       <tbody id="cart-body">
+        {% if cart_items %}
+            {% for items in cart_items %}
             <tr>
-                <td><a href="#"><i class="fa-solid fa-rectangle-xmark" style="color: #3e3f42;"></i></a></td>
-                <td><img src="img/shirt1.png"></td>
-                <td>Mens Rayon Man Casual</td>
-                <td>$78</td>
-                <td><input type="number" value="1"></td>
-                <td>$78</td>
+                <td>
+                    <a href="{{ url_for('remove_from_cart', product_id=item.id) }}">
+                    <i class="fa-solid fa-rectangle-xmark" style="color: #3e3f42;"></i>
+                </a>
+                </td>
+                <td><img src="{{ item.image }}"></td>
+            <td>{{ item.name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td><input type="number" value="{{ item.quantity }}" readonly></td>
+            <td>₹{{ item.total }}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="6"><strong>Your cart is empty.</strong></td>
+        </tr>
+    {% endif %}
+</tbody>
             </tr>
-            <tr>
-                <td><a href="#"><i class="fa-solid fa-rectangle-xmark" style="color: #3e3f42;"></i></a></td>
-                <td><img src="img/shirt2.png"></td>
-                <td>Amazopn Brand - Symbol</td>
-                <td>$67</td>
-                <td><input type="number" value="1"></td>
-                <td>$67</td>
-            </tr>
-            <tr>
-                <td><a href="#"><i class="fa-solid fa-rectangle-xmark" style="color: #3e3f42;"></i></a></td>
-                <td><img src="img/shirt3.png"></td>
-                <td>Bharat Men's Regular Fit Casual</td>
-                <td>$48</td>
-                <td><input type="number" value="1"></td>
-                <td>$48</td>
-            </tr>
-        </tbody>
+       </tbody>
     </table>
 </section>
 
@@ -91,18 +89,17 @@
         <h3>Cart Total</h3>
         <table>
             <tr>
-                <td>Cart Total</td>
-                <td>$193</td>
-            </tr>
-            <tr>
-                <td>Shipping</td>
-                <td>Free</td>
-            </tr>
-            <tr>
-                <td><strong>Total</strong></td>
-                <td><strong>$193</strong></td>
+  <td>Cart Total</td>
+  <td id="cart-total">₹0</td>
+</tr>
 
-            </tr>
+    <td>Shipping</td>
+    <td>Free</td>
+</tr>
+<tr>
+    <td><strong>Total</strong></td>
+    <td><strong>₹{{ total }}</strong></td>
+</tr>
         </table>
         <button class="normal">Proceed to checkout</button>
     </div>
